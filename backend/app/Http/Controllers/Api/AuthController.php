@@ -2,65 +2,81 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\UpdateProfileRequest;
+use App\Http\Requests\Auth\UpdateThemeRequest;
+use App\Http\Resources\AuthUserResource;
+use App\Services\AuthService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function __construct(private readonly AuthService $auth)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed'
-        ]);
+    }
 
-        $user = User::create([
-            ...$validated,
-            'password' => Hash::make($validated['password'])
-        ]);
-
-        $token = $user->createToken('auth_token')->plainTextToken;
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $user = $this->auth->register($request->validated(), $request);
 
         return response()->json([
-            'user' => $user,
-            'token' => $token
+            'message' => 'Registered successfully.',
+            'user' => new AuthUserResource($user),
         ], 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Invalid credentials']
-            ]);
-        }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user = $this->auth->login(
+            $request->validated(),
+            $request,
+            $request->boolean('remember')
+        );
 
         return response()->json([
-            'user' => $user,
-            'token' => $token
+            'message' => 'Logged in successfully.',
+            'user' => new AuthUserResource($user),
         ]);
     }
 
-    public function logout(Request $request)
+    public function me(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'user' => new AuthUserResource($request->user()),
+        ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $this->auth->logout($request);
 
         return response()->json([
-            'message' => 'Logged out'
+            'message' => 'Logged out successfully.',
+        ]);
+    }
+
+    public function updateTheme(UpdateThemeRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $user = $this->auth->updateTheme($request, $data['theme_preference']);
+
+        return response()->json([
+            'message' => 'Theme updated successfully.',
+            'user' => new AuthUserResource($user),
+        ]);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        $user = $this->auth->updateProfile($request->validated(), $request);
+
+        return response()->json([
+            'message' => 'Profile updated successfully.',
+            'user' => new AuthUserResource($user),
         ]);
     }
 }
