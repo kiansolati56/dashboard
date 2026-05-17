@@ -1,0 +1,28 @@
+{
+  "name": "kargah-bargee",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@hypernym/nuxt-gsap": "^2.4.3",
+    "@nuxt/image": "^2.0.0",
+    "@pinia/nuxt": "^0.11.3",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/scrollmagic": "^2.0.8",
+    "ag-grid-community": "^35.2.1",
+    "ag-grid-vue3": "^35.2.1",
+    "gsap": "^3.15.0",
+    "nuxt": "^4.4.4",
+    "pinia": "^3.0.4",
+    "scrollmagic": "^2.0.9",
+    "tailwindcss": "^4.2.4",
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6"
+  }
+}

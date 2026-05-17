@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@theme {
+    --font-roboto: "Roboto", "sans-serif";
+
+    --color-thprimary: #f7f8f8;
+    --color-thsecondary: #000000;
+    --color-thtertiary: #e6e6e6;
+    --color-thaccent: #ffffff18;
+    --color-thprimarybackground: #060606;
+    --color-thgray-100: #28282c;
+    --color-thgray-200: #3e3e44;
+    --color-thgray-300: #323237;
+    --color-thgray-400: #161616;
+    --color-thgray-500: #121212;
+    --color-thgray-600: #1e1e1e;
+    --color-thgray-700: #202020;
+    --color-thblack: #000000;
+    --color-thwhite: #ffffff;
+}
+
+body.light-theme {
+    --color-thprimary: #1a1a1a !important;
+    --color-thsecondary: #f0f0f0 !important;
+    --color-thtertiary: #f5f5f5 !important;
+    --color-thaccent: #0000000c !important;
+    --color-thprimarybackground: #ffffff !important;
+    --color-thgray-100: #e8e8e8 !important;
+    --color-thgray-200: #d1d1d1 !important;
+    --color-thgray-300: #bdbdbd !important;
+    --color-thgray-400: #f5f5f5 !important;
+    --color-thgray-500: #fafafa !important;
+    --color-thgray-600: #efefef !important;
+    --color-thgray-700: #e0e0e0 !important;
+    --color-thblack: #ffffff !important;
+    --color-thwhite: #000000 !important;
+}
+
+body {
+    background-color: var(--color-thprimarybackground);
+    color: var(--color-thprimary);
+}
+
+@utility container {
+    padding-inline: 1.5rem;
+    margin-inline: auto;
+
+    @variant sm {
+        padding-inline: 2.5rem;
+    }
+
+    @variant lg {
+        padding-inline: 2.5rem;
+    }
+
+    @variant xl {
+        padding-inline: 2.5rem;
+    }
+
+    @variant 2xl {
+        padding-inline: 8rem;
+    }
+}
+
+.center {
+    @apply flex justify-center items-center;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+button,
+a,
+nuxt-link {
+    outline: none !important;
+    cursor: pointer;
+}
