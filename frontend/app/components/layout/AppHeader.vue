@@ -2,6 +2,7 @@
 const router = useRouter()
 const route = useRoute()
 const modals = useModals()
+const auth = useAuth()
 
 const emit = defineEmits(['open-sidebar'])
 
@@ -136,16 +137,16 @@ const currentTime = computed(() => {
     <div class="col-span-6 md:col-span-4 lg:col-span-6 xl:col-span-4 flex justify-start items-center gap-3">
         <div class="flex lg:hidden justify-start items-center">
             <nuxt-link to="/dashboard" class="w-14 h-full border-r border-thgray-200/50 center">
-                <span class="text-2xl">🍂</span>
+                <span class="text-xl">🍂</span>
             </nuxt-link>
 
-            <div class="text-[17px] ml-4 font-medium">
+            <div class="ml-4 font-medium">
                 {{ currentPageTitle }}
             </div>
         </div>
 
         <button
-            class="w-50 h-10 relative bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 rounded-full transition-all duration-200 outline-none text-xs text-thprimary/50 border border-thgray-200/50 hidden lg:flex justify-between items-center px-3"
+            class="w-50 h-9 relative bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 rounded-lg transition-all duration-200 outline-none text-xs text-thprimary/50 border border-thgray-200/50 hidden lg:flex justify-between items-center px-3"
             @click="modals.openSearch()">
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -155,7 +156,7 @@ const currentTime = computed(() => {
                 </svg>
                 <span class="font-mono mt-px">Search...</span>
             </div>
-            <div class="h-5 px-1 border border-thgray-200/50 rounded-md center text-xs font-mono bg-thgray-100">
+            <div class="h-5 px-1 pt-1 border border-thgray-200/50 rounded-sm center text-[10px] font-mono bg-thgray-100">
                 Ctrl+Space</div>
         </button>
     </div>
@@ -174,7 +175,7 @@ const currentTime = computed(() => {
     <div class="col-span-6 md:col-span-4 lg:col-span-6 xl:col-span-4 flex justify-end items-center gap-3">
         <div class="flex items-center gap-3 relative">
             <button ref="createButtonRef"
-                class="h-10 px-4 pt-px hidden lg:flex justify-center items-center gap-2 text-sm bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 border border-thgray-200/50 rounded-full"
+                class="h-9 px-2 pt-px hidden lg:flex justify-center items-center gap-2 text-sm bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 border border-thgray-200/50 rounded-lg"
                 @click.stop="toggleCreateMenu">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4">
@@ -187,9 +188,9 @@ const currentTime = computed(() => {
                 enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-150 ease-in"
                 leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
                 <div v-if="createMenuOpen" ref="createMenuRef"
-                    class="p-1 bg-thprimarybackground border border-thgray-200/50 w-49 rounded-2xl absolute right-0 mt-2 top-full space-y-1 z-50">
+                    class="p-1 bg-thprimarybackground border border-thgray-200/50 w-45 rounded-xl absolute right-0 mt-1.5 top-full space-y-1 z-110">
                     <nuxt-link to="/projects/create-new"
-                        class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl"
+                        class="h-9 w-full pt-px flex items-center px-2 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 rounded-lg"
                         @click="closeAllMenus()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -200,7 +201,7 @@ const currentTime = computed(() => {
                     </nuxt-link>
 
                     <nuxt-link to="/tasks/new"
-                        class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl"
+                        class="h-9 w-full pt-px flex items-center px-2 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 rounded-lg"
                         @click="closeAllMenus()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -211,7 +212,7 @@ const currentTime = computed(() => {
                     </nuxt-link>
 
                     <button
-                        class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl"
+                        class="h-9 w-full pt-px flex items-center px-2 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 rounded-lg"
                         @click="() => { modals.openUpload(); closeAllMenus(); }">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -222,7 +223,7 @@ const currentTime = computed(() => {
                     </button>
 
                     <nuxt-link to="/notes/new"
-                        class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl"
+                        class="h-9 w-full pt-px flex items-center px-2 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 rounded-lg"
                         @click="closeAllMenus()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -236,9 +237,10 @@ const currentTime = computed(() => {
 
             <div class="flex items-center gap-3">
                 <button ref="profileButtonRef"
-                    class="size-10 rounded-full overflow-hidden transition-all duration-200 border border-thgray-200/50 p-0.5"
+                    class="size-10 rounded-full overflow-hidden transition-all duration-200 border border-thgray-200/50 p-0.5 relative"
                     @click.stop="toggleProfileMenu">
-                    <nuxt-img class="size-full object-cover rounded-full" src="/images/kian-profile.png" />
+                    <nuxt-img v-if="auth?.user?.avatar_url" class="size-full object-cover rounded-full" :src="auth?.user?.avatar_url" :alt="auth?.user?.name" />
+                    <div v-else class="size-10 bg-thprimary/20 animate-pulse rounded-full absolute inset-0 m-auto"></div>
                 </button>
 
                 <Transition enter-active-class="transition duration-200 ease-out"
@@ -246,9 +248,9 @@ const currentTime = computed(() => {
                     leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
                     <div v-if="profileMenuOpen" ref="profileMenuRef"
-                        class="p-1 bg-thprimarybackground border border-thgray-200/50 w-40 rounded-2xl absolute right-0 mt-2 top-full space-y-1 z-50">
+                        class="p-1 bg-thprimarybackground border border-thgray-200/50 w-40 rounded-xl absolute right-0 mt-1.5 top-full space-y-1 z-110">
                         <nuxt-link to="/settings/profile"
-                            class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl"
+                            class="h-9 w-full pt-px flex items-center px-2 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 rounded-lg"
                             @click="closeAllMenus()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-5">
@@ -259,7 +261,7 @@ const currentTime = computed(() => {
                         </nuxt-link>
 
                         <nuxt-link to="/settings"
-                            class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl"
+                            class="h-9 w-full pt-px flex items-center px-2 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 rounded-lg"
                             @click="closeAllMenus()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-5">
@@ -272,7 +274,7 @@ const currentTime = computed(() => {
                         </nuxt-link>
 
                         <nuxt-link to="/auth/logout"
-                            class="h-10 w-full pt-px flex items-center px-4 gap-2 text-sm bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200 border border-thgray-200/50 rounded-xl text-red-400"
+                            class="flex items-center gap-2 px-2 h-9 active:bg-red-400/12 hover:bg-red-400/10 rounded-lg transition-all duration-200 text-red-400 w-full text-sm"
                             @click="closeAllMenus()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-5">
@@ -286,7 +288,7 @@ const currentTime = computed(() => {
             </div>
 
             <button @click="emit('open-sidebar')"
-                class="size-10 shrink-0 flex lg:hidden justify-center items-center bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 rounded-full border border-thgray-200/50">
+                class="size-9 shrink-0 flex lg:hidden justify-center items-center bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 rounded-full border border-thgray-200/50">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -295,7 +297,7 @@ const currentTime = computed(() => {
             </button>
         </div>
 
-        <div class="h-full border-l border-thgray-200/50 pl-3 hidden sm:flex items-center pb-0.5">
+        <div class="border-l border-thgray-200/50 pl-3 hidden sm:flex items-center pb-0.5 h-7">
             <span class="font-medium text-thprimary">{{ currentTime }}</span>
         </div>
     </div>

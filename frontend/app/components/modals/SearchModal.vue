@@ -108,11 +108,11 @@ onUnmounted(() => {
 <template>
     <ModalsBaseModal v-model="modals.searchOpen.value" :overlay="false">
         <div
-            class="w-full max-w-2xl h-68 sm:h-100 overflow-hidden bg-thprimary/7 backdrop-blur-lg pt-4 px-4 relative rounded-4xl border border-thgray-200/50 shadow-2xl">
+            class="w-full max-w-2xl h-68 sm:h-100 overflow-hidden bg-thprimarybackground pt-4 px-4 relative rounded-3xl border border-thgray-200/50 shadow-2xl shadow-thprimary/8">
             <div class="w-[calc(100%-16px)] h-12 absolute left-1/2 -translate-x-1/2 top-2 z-30">
-                <div class="relative w-full h-12 mb-4">
+                <div class="relative w-full h-10 mb-4">
                     <input ref="searchInput" v-model="query" type="text"
-                        class="w-full h-12 bg-thprimary/5 backdrop-blur-md rounded-4xl border border-thgray-200/50 hover:border-thgray-200 focus:border-thgray-200 transition-all duration-200 outline-none px-4 placeholder:text-sm font-mono pl-11 pb-0.5"
+                        class="w-full h-10 outline-none px-4 placeholder:text-sm font-mono pl-11 pb-0.5"
                         placeholder="What do you need?" @keydown="handleKeydown" />
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4 text-thprimary/50 absolute top-1/2 -translate-y-1/2 left-4">
@@ -126,16 +126,16 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <div class="size-full pt-14">
+            <div class="size-full pt-11">
                 <div v-if="filteredItems.length === 0"
                     class="text-sm text-thprimary/50 italic mt-35 font-mono text-center">
                     Nothing found. try search something else
                 </div>
                 <ul v-else class="w-full space-y-1 overflow-y-auto max-h-[calc(100%-1.125rem)] hide-scrollbar">
                     <li v-for="(item, index) in filteredItems" :key="item.label" :ref="el => setItemRef(el, index)"
-                        class="flex items-center gap-2 px-3 h-10 rounded-full transition-all duration-200 cursor-pointer"
+                        class="flex items-center gap-2 px-2 h-9 rounded-xl transition-all duration-200 cursor-pointer"
                         :class="{
-                            'bg-thprimary/12': index === selectedIndex,
+                            'bg-thprimary/8': index === selectedIndex,
                             'hover:bg-thprimary/10': index !== selectedIndex
                         }" @click="navigateToItem(item)" @mouseenter="selectedIndex = index">
                         <svg v-if="item.icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

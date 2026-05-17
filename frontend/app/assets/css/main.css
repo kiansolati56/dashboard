@@ -122,12 +122,12 @@ body {
     @apply flex justify-center items-center;
 }
 
-.hide-scrollbar {
+* {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
-.hide-scrollbar::-webkit-scrollbar {
+*::-webkit-scrollbar {
     display: none;
 }
 
@@ -135,5 +135,5 @@ button,
 a,
 nuxt-link {
     outline: none !important;
-    cursor: pointer;
+    cursor: default;
 }

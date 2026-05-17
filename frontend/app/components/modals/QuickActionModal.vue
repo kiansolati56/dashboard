@@ -42,23 +42,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <ModalsBaseModal v-model="modals.quickOpen.value">
+    <ModalsBaseModal v-model="modals.quickOpen.value" :overlay="false">
         <div
-            class="w-full max-w-2xl h-auto overflow-hidden bg-thprimary/5 backdrop-blur-lg p-4 relative rounded-4xl border border-thgray-200/50 shadow-2xl">
+            class="w-full max-w-xl overflow-hidden bg-thprimarybackground p-4 relative rounded-3xl border border-thgray-200/50 shadow-2xl shadow-thprimary/8">
             <h2 class="font-mono text-lg text-center">Quick Actions</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
                 <button v-for="item in actions" :key="item.label"
-                    class="size-full center border border-thgray-200/50 rounded-2xl flex flex-col items-center py-6 bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200"
+                    class="size-full center border border-thgray-200/50 rounded-xl flex flex-col items-center py-5 bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 transition-all duration-200"
                     @click="handleAction(item)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-8">
                         <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
                     </svg>
-                    <h3 class="text-thprimary/50 mt-5 text-xs sm:text-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-4 mb-0.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
+                    <h3 class="text-thprimary/50 mt-5 text-sm">
                         <span>{{ item.label }}</span>
                     </h3>
                 </button>

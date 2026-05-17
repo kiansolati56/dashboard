@@ -1,5 +1,6 @@
 <script setup>
 definePageMeta({
+    middleware: 'auth',
     title: 'Projects'
 })
 
@@ -121,142 +122,116 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="-mt-1">
-        <div class="w-full flex sm:justify-between items-center mb-6 md:mb-12 pb-6 border-b border-thgray-200/50 flex-wrap">
-            <div class="flex justify-between sm:justify-start items-center w-full sm:w-auto">
-                <div class="flex items-center gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-8">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
-                    </svg>
-                    <span class="text-2xl font-semibold text-thprimary">Projects</span>
-                </div>
+    <div class="flex justify-between w-full mb-6">
+        <div class="relative group">
+            <input ref="searchInputRef" v-model="searchQuery" type="text" placeholder="Search..."
+                class="h-9 w-55 focus:w-60 px-4 pl-10 pt-px font-mono rounded-lg bg-thprimary/8 border border-thgray-200/50 text-sm text-thprimary placeholder-thprimary/40 focus:outline-none hover:border-thgray-200 focus:border-thgray-200 transition-all duration-200">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-thprimary/40"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
 
-                <nuxt-link to="/projects/create-new"
-                    class="size-10 shrink-0 flex sm:hidden justify-center items-center bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-300 rounded-full border border-thgray-200/50">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </nuxt-link>
-            </div>
-
-            <div class="flex sm:justify-end sm:items-center sm:gap-3 w-full sm:w-auto grow sm:grow-0 mt-6 sm:mt-0">
-                <div class="relative w-full">
-                    <input ref="searchInputRef" v-model="searchQuery" type="text" placeholder="Search..."
-                        class="h-10 w-full sm:w-55 sm:focus:w-60 px-4 pl-10 pt-px font-mono rounded-full bg-thprimary/8 border border-thgray-200/50 text-sm text-thprimary placeholder-thprimary/40 focus:outline-none hover:border-thgray-200 focus:border-thgray-200 transition-all duration-200">
-                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-thprimary/40"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-
-                    <button @click="focusSearchInput"
-                        class="h-5 px-1 border border-thgray-200/50 rounded-md center text-xs font-mono bg-thgray-100 absolute right-4 top-1/2 -translate-y-1/2 hover:bg-thgray-200 transition">
-                        /
-                    </button>
-                </div>
-                <nuxt-link to="/projects/create-new"
-                    class="size-10 shrink-0 hidden sm:flex justify-center items-center bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-300 rounded-full border border-thgray-200/50">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                </nuxt-link>
-            </div>
+            <button @click="focusSearchInput"
+                class="h-5 px-1 border border-thgray-200/50 rounded-md center text-xs font-mono bg-thgray-100 absolute right-4 top-1/2 -translate-y-1/2 hover:bg-thgray-200 transition">
+                /
+            </button>
         </div>
 
-        <div v-if="projects.length == 0" class="h-30 sm:h-60 center text-thprimary/50 italic font-mono">
-            There's no project yet
+        <nuxt-link to="/projects/create-new"
+            class="size-9 shrink-0 center bg-thprimary/8 hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-300 rounded-lg border border-thgray-200/50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+        </nuxt-link>
+
+    </div>
+
+    <div v-if="projects.length == 0" class="h-30 sm:h-60 center text-thprimary/50 italic font-mono">
+        There's no project yet
+    </div>
+
+    <div v-else>
+        <div class="overflow-x-auto rounded-xl border border-thgray-200/50 overflow-hidden">
+            <table class="min-w-full divide-y divide-thgray-200/50">
+                <thead class="bg-thprimary/5">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider">
+                            <div class="flex items-center gap-1">Creator</div>
+                        </th>
+                        <th @click="changeSort('title')"
+                            class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/8 transition">
+                            <div class="flex items-center gap-1">Title {{ getSortIcon('title') }}</div>
+                        </th>
+                        <th @click="changeSort('status')"
+                            class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/8 transition">
+                            <div class="flex items-center gap-1">Status {{ getSortIcon('status') }}</div>
+                        </th>
+                        <th @click="changeSort('category')"
+                            class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/8 transition">
+                            <div class="flex items-center gap-1">Category {{ getSortIcon('category') }}</div>
+                        </th>
+                        <th @click="changeSort('assigned_to')"
+                            class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/8 transition">
+                            <div class="flex items-center gap-1">Developer {{ getSortIcon('assigned_to') }}</div>
+                        </th>
+                        <th @click="changeSort('created_at')"
+                            class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/8 transition">
+                            <div class="flex items-center gap-1">Created {{ getSortIcon('created_at') }}</div>
+                        </th>
+                        <th class="px-6 py-3 text-right text-xs font-mono text-thprimary/70 uppercase tracking-wider">
+                            Details</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-thgray-200/50 bg-thprimary/5">
+                    <tr v-for="project in paginatedProjects" :key="project.id" class="hover:bg-thprimary/8 transition">
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-green-300">{{ project.creator }}</td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm font-medium text-thprimary">{{ project.title
+                        }}</td>
+                        <td class="px-5 py-3 whitespace-nowrap">
+                            <span
+                                :class="['px-2 py-1 rounded-full text-xs font-mono', statusBadgeClass(project.status)]">{{
+                                    project.status }}</span>
+                        </td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-thprimary/70">{{ project.category }}
+                        </td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-thprimary/70">{{ project.assigned_to }}
+                        </td>
+                        <td class="px-5 py-3 whitespace-nowrap text-sm text-thprimary/70">{{ project.created_at }}
+                        </td>
+                        <td class="px-5 py-3 whitespace-nowrap text-right text-sm">
+                            <nuxt-link to="/projects/sample-project"
+                                class="px-3 py-1.5 rounded-lg bg-thprimary/10 text-thprimary text-sm hover:bg-thprimary/20 transition">
+                                Details
+                            </nuxt-link>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <div v-else>
-            <div class="overflow-x-auto rounded-2xl border border-thgray-200/50 overflow-hidden">
-                <table class="min-w-full divide-y divide-thgray-200/50">
-                    <thead class="bg-thprimary/5">
-                        <tr>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider">
-                                <div class="flex items-center gap-1">Creator</div>
-                            </th>
-                            <th @click="changeSort('title')"
-                                class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/10 transition">
-                                <div class="flex items-center gap-1">Title {{ getSortIcon('title') }}</div>
-                            </th>
-                            <th @click="changeSort('status')"
-                                class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/10 transition">
-                                <div class="flex items-center gap-1">Status {{ getSortIcon('status') }}</div>
-                            </th>
-                            <th @click="changeSort('category')"
-                                class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/10 transition">
-                                <div class="flex items-center gap-1">Category {{ getSortIcon('category') }}</div>
-                            </th>
-                            <th @click="changeSort('assigned_to')"
-                                class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/10 transition">
-                                <div class="flex items-center gap-1">Developer {{ getSortIcon('assigned_to') }}</div>
-                            </th>
-                            <th @click="changeSort('created_at')"
-                                class="px-6 py-3 text-left text-xs font-mono text-thprimary/70 uppercase tracking-wider cursor-pointer hover:bg-thprimary/10 transition">
-                                <div class="flex items-center gap-1">Created {{ getSortIcon('created_at') }}</div>
-                            </th>
-                            <th
-                                class="px-6 py-3 text-right text-xs font-mono text-thprimary/70 uppercase tracking-wider">
-                                Details</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-thgray-200/50 bg-thprimary/5">
-                        <tr v-for="project in paginatedProjects" :key="project.id"
-                            class="hover:bg-thprimary/10 transition">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-green-300">{{ project.creator }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-thprimary">{{ project.title
-                                }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span
-                                    :class="['px-2 py-1 rounded-full text-xs font-mono', statusBadgeClass(project.status)]">{{
-                                        project.status }}</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-thprimary/70">{{ project.category }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-thprimary/70">{{ project.assigned_to }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-thprimary/70">{{ project.created_at }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                                <nuxt-link to="/projects/sample-project"
-                                    class="px-3 py-1.5 rounded-lg bg-thprimary/10 text-thprimary text-sm hover:bg-thprimary/20 transition">
-                                    Details
-                                </nuxt-link>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mt-6 gap-y-5 sm:gap-0">
+            <div class="flex gap-2 sm:gap-4">
+                <button @click="currentPage--" :disabled="currentPage === 1"
+                    class="size-10 rounded-full bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 border border-thgray-200/50 center text-thprimary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed!">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-4.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    </svg>
+                </button>
+
+                <button v-for="p in paginationRange" :key="p" @click="typeof p === 'number' ? currentPage = p : null"
+                    class="size-10 rounded-full bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 border border-thgray-200/50 center text-thprimary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed! text-sm font-mono">
+                    {{ p }}
+                </button>
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mt-6 gap-y-5 sm:gap-0">
-                <div class="flex gap-2 sm:gap-4">
-                    <button @click="currentPage--" :disabled="currentPage === 1"
-                        class="size-10 rounded-full bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 border border-thgray-200/50 center text-thprimary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed!">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-4.5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                        </svg>
-                    </button>
-
-                    <button v-for="p in paginationRange" :key="p"
-                        @click="typeof p === 'number' ? currentPage = p : null"
-                        class="size-10 rounded-full bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 border border-thgray-200/50 center text-thprimary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed! text-sm font-mono">
-                        {{ p }}
-                    </button>
-                </div>
-
-                <div class="text-sm text-thprimary/60 font-mono">
-                    <span class="font-roboto">Showing</span> {{ (currentPage - 1) * itemsPerPage + 1 }}
-                    <span class="font-roboto">to</span> {{ Math.min(currentPage * itemsPerPage, totalItems) }}
-                    <span class="font-roboto">of</span> {{ totalItems }}
-                </div>
+            <div class="text-sm text-thprimary/60 font-mono">
+                <span class="font-roboto">Showing</span> {{ (currentPage - 1) * itemsPerPage + 1 }}
+                <span class="font-roboto">to</span> {{ Math.min(currentPage * itemsPerPage, totalItems) }}
+                <span class="font-roboto">of</span> {{ totalItems }}
             </div>
         </div>
     </div>

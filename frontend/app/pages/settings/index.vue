@@ -7,6 +7,7 @@ const dropdownRef = ref(null)
 const currentTheme = ref('dark')
 
 definePageMeta({
+    middleware: 'auth',
     title: 'Settings'
 })
 

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 definePageMeta({
+    middleware: 'auth',
     title: 'Project'
 })
 
@@ -24,7 +25,7 @@ const project = ref({
         'Customer segmentation and behavior tracking',
         'Marketing campaign ROI dashboard',
         'Customizable report generation (PDF/CSV)',
-        'Role‑based access control for team members'
+        'Role‑based access control for Users'
     ],
     technologies: [
         'Vue 3 / Nuxt 3 frontend',

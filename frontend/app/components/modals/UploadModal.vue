@@ -138,13 +138,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <ModalsBaseModal v-model="modals.uploadOpen.value">
+    <ModalsBaseModal v-model="modals.uploadOpen.value" :overlay="false">
         <div
-            class="w-full max-w-2xl h-auto overflow-hidden bg-thprimary/5 backdrop-blur-lg p-5 relative rounded-4xl border border-thgray-200/50 shadow-2xl">
-            <div class="flex items-center justify-between">
+            class="w-full max-w-2xl overflow-hidden bg-thprimarybackground p-4 relative rounded-3xl border border-thgray-200/50 shadow-2xl shadow-thprimary/8">
+            <div class="flex items-center justify-between pl-1">
                 <h3 class="text-lg text-thprimary">Upload</h3>
                 <button
-                    class="size-10 center rounded-full hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 border border-transparent hover:border-thgray-200/50"
+                    class="size-9 center rounded-lg hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200"
                     @click="close">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -154,7 +154,7 @@ onUnmounted(() => {
             </div>
 
             <div ref="dropZoneRef"
-                class="mt-5 w-full border-2 border-dashed border-thgray-200/50 h-50 rounded-2xl bg-thprimary/5 hover:bg-thprimary/6 active:bg-thprimary/8 transition-all duration-200 cursor-pointer center flex-col"
+                class="mt-4 w-full border border-dashed border-thgray-200/50 h-50 rounded-xl bg-thprimary/5 hover:bg-thprimary/6 active:bg-thprimary/8 transition-all duration-200 center flex-col cursor-default"
                 @dragover.prevent @dragleave.prevent @drop="handleDrop" @click="$refs.fileInput.click()">
                 <input ref="fileInput" type="file" class="hidden" @change="handleBrowse" />
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
@@ -168,7 +168,7 @@ onUnmounted(() => {
             </div>
 
             <div v-if="file"
-                class="mt-5 w-full border border-thgray-200/50 p-3 rounded-2xl bg-thprimary/5 flex justify-between items-center">
+                class="mt-4 w-full border border-thgray-200/50 p-3 rounded-xl bg-thprimary/5 flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <div v-if="isImage" class="size-12 rounded-lg center overflow-hidden">
                         <img :src="previewUrl" class="size-full object-cover" alt="preview" />
@@ -196,7 +196,7 @@ onUnmounted(() => {
 
                 <div class="flex items-center gap-2">
                     <button
-                        class="size-8 center rounded-full hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 border border-transparent hover:border-thgray-200/50"
+                        class="size-9 center rounded-lg hover:bg-thprimary/10 active:bg-thprimary/12 transition-all duration-200 "
                         @click="startRename">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-4">
@@ -206,7 +206,7 @@ onUnmounted(() => {
                     </button>
 
                     <button
-                        class="size-8 center rounded-full hover:bg-red-400/10 active:bg-red-400/12 transition-all duration-200 border border-transparent hover:border-red-400/50 text-red-400"
+                        class="size-9 center rounded-lg hover:bg-red-400/10 active:bg-red-400/12 transition-all duration-200 text-red-400"
                         @click="removeFile">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -216,15 +216,15 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <div class="grid sm:grid-cols-2 gap-2 sm:gap-5 mt-5">
+            <div class="grid sm:grid-cols-2 gap-2 sm:gap-4 mt-4">
                 <button
-                    class="w-full h-10 rounded-full bg-thprimary/8 border border-thgray-200/50 text-thprimary active:bg-thprimary/12 hover:bg-thprimary/10 text-sm transition-all duration-200 center"
+                    class="w-full h-9 rounded-lg bg-thprimary/8 border border-thgray-200/50 text-thprimary active:bg-thprimary/12 hover:bg-thprimary/10 text-sm transition-all duration-200 center"
                     @click="close">
                     Cancel
                 </button>
 
                 <button
-                    class="bg-thgray-100 border border-thgray-200 w-full h-10 rounded-full text-thprimary hover:text-thprimary text-sm hover:bg-thgray-300 transition-all duration-200 center"
+                    class="w-full h-9 rounded-lg bg-thprimary/12 border border-thgray-200/50 text-thprimary active:bg-thprimary/16 hover:bg-thprimary/14 text-sm transition-all duration-200 center"
                     @click="close">
                     Upload
                 </button>

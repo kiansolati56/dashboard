@@ -1,5 +1,6 @@
 <script setup>
 const route = useRoute()
+const auth = useAuth()
 
 const menuItems = [
     {
@@ -14,6 +15,13 @@ const menuItems = [
         slug: '/projects',
         icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />`
     },
+    {
+        id: 3,
+        title: 'Users',
+        slug: '/users',
+        icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />`
+    },
+
     {
         id: 3,
         title: 'Notes',
@@ -86,26 +94,21 @@ const handleCloseSidebar = () => {
 
 <template>
     <div>
-        <div class="flex justify-start items-center h-16 border-b border-b-thgray-200/50 py-4">
+        <div class="flex justify-start items-center h-14 border-b border-b-thgray-200/50 py-4">
             <nuxt-link to="/dashboard" class="w-14 h-full border-r border-thgray-200/50 center">
-                <span class="text-2xl">🍂</span>
+                <span class="text-xl">🍂</span>
             </nuxt-link>
 
-            <div class="text-[17px] ml-4 font-medium">
+            <div class="ml-4 font-medium">
                 Dashboard
             </div>
         </div>
 
-        <div class="p-4">
-            <h2 class="text-thprimary flex items-center gap-2">
-                <small class="text-lg md:text-xl font-medium">•</small>
-                <small class="text-base">Navigate</small>
-            </h2>
-
+        <div class="px-2">
             <ul class="mt-4 space-y-1">
                 <li v-for="item in menuItems" :key="item.id" @click="handleCloseSidebar">
                     <nuxt-link :to="item.slug"
-                        class="flex items-center gap-2 px-3 h-10 active:bg-thprimary/12 hover:bg-thprimary/10 rounded-full transition-all duration-200 border"
+                        class="flex items-center gap-2 px-2 h-9 active:bg-thprimary/12 hover:bg-thprimary/10 rounded-lg transition-all duration-200 border"
                         :class="$route.path === item.slug ? 'bg-thprimary/8 border-thgray-200/50' : 'border-transparent'">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6" v-html="item.icon">
@@ -118,10 +121,10 @@ const handleCloseSidebar = () => {
     </div>
 
     <div>
-        <ul class="space-y-1 px-4">
+        <ul class="space-y-1 px-2">
             <li @click="handleCloseSidebar">
                 <nuxt-link to="/settings"
-                    class="flex items-center gap-2 px-3 h-10 active:bg-thprimary/12 hover:bg-thprimary/10 rounded-full transition-all duration-200 border"
+                    class="flex items-center gap-2 px-2 h-9 active:bg-thprimary/12 hover:bg-thprimary/10 rounded-lg transition-all duration-200 border"
                     :class="$route.path === '/settings' ? 'bg-thprimary/8 border-thgray-200/50' : 'border-transparent'">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -135,7 +138,7 @@ const handleCloseSidebar = () => {
 
             <li @click="handleCloseSidebar">
                 <nuxt-link to="/notifications"
-                    class="flex items-center gap-2 px-3 h-10 active:bg-thprimary/12 hover:bg-thprimary/10 rounded-full transition-all duration-200 border relative"
+                    class="flex items-center gap-2 px-2 h-9 active:bg-thprimary/12 hover:bg-thprimary/10 rounded-lg transition-all duration-200 border relative"
                     :class="$route.path === '/notifications' ? 'bg-thprimary/8 border-thgray-200/50' : 'border-transparent'">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -150,14 +153,14 @@ const handleCloseSidebar = () => {
                 </nuxt-link>
             </li>
         </ul>
-        <div class="w-full p-4 relative">
-            <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0 translate-y-2"
+        <div class="w-full px-2 pb-2 pt-2 relative">
+            <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0 translate-y-1.5"
                 enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-150 ease-in"
-                leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
+                leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1.5">
                 <div v-if="showProfileMenu" ref="profilePopupRef"
-                    class="w-[calc(100%-32px)] bg-thprimary/10 backdrop-blur-xl absolute left-1/2 -translate-x-1/2 bottom-[calc(100%-10px)] rounded-3xl border border-thgray-200/50 overflow-hidden">
+                    class="w-[calc(100%-16px)] bg-thprimarybackground absolute left-1/2 -translate-x-1/2 bottom-[calc(100%-3px)] rounded-xl border border-thgray-200/50 overflow-hidden p-1 space-y-1">
                     <button
-                        class="h-10 flex items-center gap-2 px-4 hover:bg-thprimary/10 transition-all duration-200 active:bg-thprimary/12 w-full"
+                        class="flex items-center gap-2 px-2 h-9 bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 rounded-lg transition-all duration-200 w-full"
                         @click="() => { showProfileMenu = false; navigateTo('/settings'); handleCloseSidebar() }">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -170,7 +173,7 @@ const handleCloseSidebar = () => {
                     </button>
 
                     <button
-                        class="h-10 flex items-center gap-2 px-4 hover:bg-thprimary/10 transition-all duration-200 active:bg-thprimary/12 w-full"
+                        class="flex items-center gap-2 px-2 h-9 bg-thprimary/5 hover:bg-thprimary/8 active:bg-thprimary/10 rounded-lg transition-all duration-200 w-full"
                         @click="() => { showProfileMenu = false; navigateTo('/settings/profile'); handleCloseSidebar() }">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
@@ -180,29 +183,38 @@ const handleCloseSidebar = () => {
                         <span class="text-sm mt-0.5 text-thprimary font-mono">Profile</span>
                     </button>
 
-                    <button
-                        class="h-10 flex items-center gap-2 px-4 hover:bg-thprimary/10 transition-all duration-200 active:bg-thprimary/12 w-full text-red-400"
-                        @click="() => { showProfileMenu = false; handleLogout(); handleCloseSidebar() }">
+                    <nuxt-link to="/auth/logout"
+                        class="flex items-center gap-2 px-2 h-9 active:bg-red-400/12 hover:bg-red-400/10 rounded-lg transition-all duration-200 text-red-400 w-full"
+                        @click="() => { showProfileMenu = false; handleCloseSidebar() }">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                         </svg>
                         <span class="text-sm mt-0.5 font-mono">Logout</span>
-                    </button>
+                    </nuxt-link>
                 </div>
             </Transition>
 
             <button ref="profileButtonRef"
-                class="rounded-full bg-thprimary/8 border border-thgray-200/50 hover:bg-thprimary/10 p-2 flex justify-between items-center transition-all duration-200 active:bg-thprimary/12 w-full"
+                class="rounded-xl bg-thprimary/8 border border-thgray-200/50 hover:bg-thprimary/10 p-1.5 flex justify-between items-center transition-all duration-200 active:bg-thprimary/12 w-full"
                 @click.stop="toggleProfileMenu">
                 <div class="flex items-center gap-2">
-                    <div class="size-10 rounded-full overflow-hidden">
-                        <nuxt-img class="size-full object-cover" src="/images/kian-profile.png" />
+                    <div class="size-8 rounded-full overflow-hidden relative">
+                        <nuxt-img v-if="auth?.user?.avatar_url" class="size-full object-cover rounded-full"
+                            :src="auth?.user?.avatar_url" :alt="auth?.user?.name" />
+                        <div v-else class="size-8 bg-thprimary/20 animate-pulse rounded-full absolute inset-0 m-auto">
+                        </div>
                     </div>
-                    <div class="flex flex-col justify-start">
-                        <h3 class="text-sm text-start">Kian</h3>
-                        <small class="text-xs text-thprimary/50">Developer</small>
+                    <div class="flex flex-col justify-start" :class="auth?.user?.name ? '' : 'gap-y-1'">
+                        <h3 class="text-sm text-start">
+                            <span v-if="auth?.user?.name">{{ auth?.user?.name }}</span>
+                            <div v-else class="h-2.5 w-13 bg-thprimary/20 rounded-sm animate-pulse"></div>
+                        </h3>
+                        <small class="text-xs text-thprimary/50 -mt-1">
+                            <span v-if="auth?.user?.username">@{{ auth?.user?.username }}</span>
+                            <div v-else class="h-2.5 w-16 bg-thprimary/20 rounded-sm animate-pulse"></div>
+                        </small>
                     </div>
                 </div>
                 <div class="size-8 center text-thprimary/50">
