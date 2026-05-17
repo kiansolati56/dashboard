@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useAuthStore } from '~/stores/auth'
-
 definePageMeta({
-    layout: 'auth-layout'
+    layout: 'auth-layout',
+    middleware: 'guest',
 })
 
-const auth = useAuthStore()
+const auth = useAuth()
 
 const form = reactive({
     email: '',
-    password: ''
+    password: '',
+    remember: true,
 })
 
 const showPassword = ref(false)
@@ -27,17 +27,19 @@ const handleLogin = async () => {
     try {
         await auth.login({
             email: form.email,
-            password: form.password
+            password: form.password,
+            remember: form.remember,
         })
 
         await navigateTo('/dashboard')
-
-        console.log('login was success')
     } catch (error: any) {
+        const errors = error?.data?.errors || {}
+
         errorMessage.value =
             error?.data?.message ||
-            error?.data?.email?.[0] ||
-            'Login failed. Please check your credentials.'
+            errors.email?.[0] ||
+            errors.password?.[0] ||
+            'Login failed.'
     } finally {
         isLoading.value = false
     }
@@ -59,8 +61,7 @@ const handleLogin = async () => {
                 </div>
 
                 <div class="relative h-10 w-full">
-                    <input v-model="form.email" type="email" name="email" autocomplete="email"
-                        placeholder="Your email..."
+                    <input v-model="form.email" type="email" autocomplete="email" placeholder="Your email..."
                         class="h-10 w-full rounded-4xl border border-thgray-200/50 bg-thprimary/5 px-4 pl-11 pt-1 pb-0.5 font-mono text-sm outline-none transition-all duration-200 placeholder:text-sm hover:border-thgray-200 focus:border-thgray-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-thprimary/50">
@@ -70,7 +71,7 @@ const handleLogin = async () => {
                 </div>
 
                 <div class="relative -mt-2 h-10 w-full">
-                    <input v-model="form.password" :type="showPassword ? 'text' : 'password'" name="password"
+                    <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
                         autocomplete="current-password" placeholder="Your password..."
                         class="h-10 w-full rounded-4xl border border-thgray-200/50 bg-thprimary/5 px-4 pl-11 pr-11 pt-1 pb-0.5 font-mono text-sm outline-none transition-all duration-200 placeholder:text-sm hover:border-thgray-200 focus:border-thgray-200">
 
@@ -82,7 +83,7 @@ const handleLogin = async () => {
 
                     <button type="button"
                         class="absolute right-4 top-1/2 -translate-y-1/2 text-thprimary/50 transition-colors duration-200 hover:text-thprimary/80"
-                        @click="togglePassword" :aria-label="showPassword ? 'Hide password' : 'Show password'">
+                        :aria-label="showPassword ? 'Hide password' : 'Show password'" @click="togglePassword">
                         <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -98,6 +99,11 @@ const handleLogin = async () => {
                         </svg>
                     </button>
                 </div>
+
+                <label class="flex items-center gap-2 text-sm text-thprimary/60">
+                    <input v-model="form.remember" type="checkbox" class="size-4">
+                    Remember me
+                </label>
 
                 <p v-if="errorMessage" class="-mt-1 text-sm text-red-500">
                     {{ errorMessage }}
